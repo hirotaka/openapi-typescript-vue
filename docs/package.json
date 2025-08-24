@@ -1,0 +1,17 @@
+{
+  "name": "openapi-typescript-vue-docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-docs": "pnpm run -w build && vitepress build && cp _redirects .vitepress/dist",
+    "dev": "vitepress dev",
+    "update-contributors": "node scripts/update-contributors.js"
+  },
+  "devDependencies": {
+    "@shikijs/vitepress-twoslash": "^3.3.0",
+    "openapi-metadata": "^0.2.1",
+    "vite": "^6.3.4",
+    "vitepress": "^1.6.3"
+  }
+}
