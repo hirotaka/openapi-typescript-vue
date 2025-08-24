@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: openapi-vue-query
+  description: API for openapi-vue-query example.
+  version: 0.0.1
+paths:
+  /posts:
+    get:
+      tags:
+        - posts
+      summary: Returns all posts
+      parameters:
+        - name: page
+          in: query
+          description: The page number to retrieve
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: The number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: objecj
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/post"
+                  nextPage:
+                    type: integer
+    post:
+      tags:
+        - posts
+      summary: Create a new post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post"
+        required: true
+      responses:
+        "200":
+          description: A post was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post"
+  /posts/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - post
+      summary: Get a single post
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post"
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    put:
+      tags:
+        - post
+      summary: Update a post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post"
+        required: true
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post"
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      tags:
+        - post
+      summary: Delete a post
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+components:
+  schemas:
+    post:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of the post
+        title:
+          type: string
+          description: Title of the post
+        body:
+          type: string
+          description: Body of the post
