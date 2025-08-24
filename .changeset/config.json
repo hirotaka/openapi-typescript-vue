@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.1/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "hirotaka/openapi-typescript-vue" }],
+  "ignore": ["openapi-typescript-vue-docs", "@example/*"],
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main"
+}

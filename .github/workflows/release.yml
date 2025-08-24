@@ -1,0 +1,48 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'hirotaka' }}
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      checks: write
+    steps:
+      - name: Git setup
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: pnpm setup
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # Do not remove! This ensures a build happens every time
+      - name: Build all packages
+        run: pnpm run build
+
+      - name: Changesets version and/or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version
+          publish: pnpm exec changeset publish
+          commit: "[ci] release"
+          title: "[ci] release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

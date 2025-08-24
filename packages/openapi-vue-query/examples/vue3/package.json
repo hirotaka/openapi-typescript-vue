@@ -1,0 +1,37 @@
+{
+  "name": "@example/openapi-vue-query",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "generate": "openapi-typescript src/schema/api/v1.yaml -o src/lib/api/v1.d.ts"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.14.0",
+    "openapi-vue-query": "workspace:^",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "@mswjs/data": "^0.16.2",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.10",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "msw": "^2.7.3",
+    "npm-run-all2": "^7.0.2",
+    "openapi-typescript": "^7.7.3",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.1",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue-tsc": "^2.2.8"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
