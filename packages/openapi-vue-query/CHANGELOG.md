@@ -1,5 +1,11 @@
 # openapi-vue-query
 
+## 0.0.2
+
+### Patch Changes
+
+- [`5ed71cb`](https://github.com/hirotaka/openapi-typescript-vue/commit/5ed71cbadbe4927175e6d9faaed3748c80548b40) Thanks [@hirotaka](https://github.com/hirotaka)! - Fix repository and homepage URLs in package.json
+
 ## 0.0.1
 
 ### Patch Changes
