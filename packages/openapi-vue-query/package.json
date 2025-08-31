@@ -1,7 +1,7 @@
 {
   "name": "openapi-vue-query",
   "description": "Fast, type-safe @tanstack/vue-query client to work with your OpenAPI schema.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": {
     "name": "Hirotaka Mizutani",
     "email": "hirotaka@mizutani.to"
@@ -11,7 +11,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -25,7 +27,7 @@
     },
     "./*": "./*"
   },
-  "homepage": "https://github.com/hirotaka/openapi-typescript-vue#readme",
+  "homepage": "https://openapi-ts-vue.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/hirotaka/openapi-typescript-vue",
