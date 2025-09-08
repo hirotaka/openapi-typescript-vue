@@ -315,10 +315,10 @@ const updatePost = $api.useMutation("put", "/posts/{id}", {
 
 ## 📚 Examples
 
-- [Basic CRUD Operations](./examples/playground/src/components/UseQuery.vue)
-- [Infinite Scroll](./examples/playground/src/components/UseInfiniteQuery.vue)
-- [Form Mutations](./examples/playground/src/components/UseMutation.vue)
-- [Complete Playground](./examples/playground/)
+- [Basic CRUD Operations](./examples/vue3/src/components/UseQuery.vue)
+- [Infinite Scroll](./examples/vue3/src/components/UseInfiniteQuery.vue)
+- [Form Mutations](./examples/vue3/src/components/UseMutation.vue)
+- [Complete Example](./examples/vue3/)
 
 ## 🔗 Related Projects
 
@@ -328,7 +328,7 @@ const updatePost = $api.useMutation("put", "/posts/{id}", {
 
 ## 📖 Documentation
 
-For detailed documentation and examples, visit: [https://openapi-ts.dev/openapi-vue-query/](https://openapi-ts.dev/openapi-vue-query/)
+For detailed documentation and examples, visit: [https://openapi-ts-vue.dev/openapi-vue-query/](https://openapi-ts-vue.dev/openapi-vue-query/)
 
 ## 🐛 Issues & Feedback
 
