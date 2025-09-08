@@ -5,7 +5,7 @@ title: openapi-vue-query
 
 openapi-vue-query is a type-safe tiny wrapper (1 kb) around [@tanstack/vue-query](https://tanstack.com/query/latest/docs/framework/vue/overview) to work with OpenAPI schema.
 
-It works by using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) and [openapi-typescript](../introduction) so you get all the following features:
+It works by using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) and [openapi-typescript](https://openapi-ts.dev/introduction) so you get all the following features:
 
 - ✅ No typos in URLs or params.
 - ✅ All parameters, request bodies, and responses are type-checked and 100% match your schema
@@ -56,7 +56,7 @@ const { data, error, isLoading } = $api.useQuery(
 
 ## Setup
 
-Install this library along with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) and [openapi-typescript](../introduction):
+Install this library along with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) and [openapi-typescript](https://openapi-ts.dev/introduction):
 
 ```bash
 npm i openapi-vue-query openapi-fetch
@@ -77,7 +77,7 @@ npx openapi-typescript ./path/to/api/v1.yaml -o ./src/lib/api/v1.d.ts
 
 ## Basic usage
 
-Once your types has been generated from your schema, you can create a [fetch client](../introduction.md), a vue-query client and start querying your API.
+Once your types has been generated from your schema, you can create a [fetch client](./introduction), a vue-query client and start querying your API.
 
 ::: code-group
 
