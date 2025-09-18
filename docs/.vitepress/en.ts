@@ -9,7 +9,6 @@ export default defineConfig({
           text: "openapi-vue-query",
           base: "/openapi-vue-query",
           items: [
-            { text: "Introduction", link: "/introduction" },
             { text: "Getting Started", link: "/" },
             { text: "useQuery", link: "/use-query" },
             { text: "useMutation", link: "/use-mutation" },
