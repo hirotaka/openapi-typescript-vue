@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /openapi-vue-query/introduction
+      link: /openapi-vue-query
     - theme: alt
       text: View on GitHub
       link: https://github.com/hirotaka/openapi-typescript-vue
