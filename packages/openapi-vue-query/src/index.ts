@@ -6,7 +6,6 @@ import {
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryReturnType,
   type UseQueryOptions,
-  type UseQueryReturnType,
   type UseMutationOptions,
   type UseMutationReturnType,
   useQuery,
@@ -22,6 +21,7 @@ import type {
 } from "openapi-fetch";
 import type { HttpMethod, MediaType, PathsWithMethod, RequiredKeysOf } from "openapi-typescript-helpers";
 import type { DeepUnwrapRef, MaybeRefDeep } from "./utils";
+import type { Ref } from "vue";
 
 // Helper type to dynamically infer the type from the `select` property
 type InferSelectReturnType<TData, TSelect> = TSelect extends (data: TData) => infer R ? R : TData;
@@ -111,7 +111,16 @@ export type UseQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>,
   ...[init, options, queryClient]: RequiredKeysOf<Init> extends never
     ? [InitWithUnknowns<Init>?, Options?, QueryClient?]
     : [InitWithUnknowns<Init>, Options?, QueryClient?]
-) => UseQueryReturnType<InferSelectReturnType<Response["data"], Options["select"]>, Response["error"]>;
+) => {
+  data: Ref<InferSelectReturnType<Response["data"], Options["select"]> | undefined>;
+  error: Ref<Response["error"] | null>;
+  isLoading: Ref<boolean>;
+  isError: Ref<boolean>;
+  isSuccess: Ref<boolean>;
+  isPending: Ref<boolean>;
+  isFetching: Ref<boolean>;
+  refetch: () => void;
+};
 
 export type UseInfiniteQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
   Method extends HttpMethod,
@@ -203,9 +212,11 @@ export default function createClient<Paths extends {}, Media extends MediaType =
 
   return {
     queryOptions,
-    useQuery: (method, path, ...[init, options, queryClient]) =>
+    useQuery: (method, path, ...[init, options, queryClient]) => {
       // @ts-expect-error FIX: fix type error
-      useQuery(queryOptions(method, path, init as InitWithUnknowns<typeof init>, options), queryClient),
+      const result = useQuery(queryOptions(method, path, init as InitWithUnknowns<typeof init>, options), queryClient);
+      return result as any;
+    },
     useInfiniteQuery: (method, path, init, options, queryClient) => {
       const { pageParamName = "cursor", ...restOptions } = options;
       const { queryKey } = queryOptions(method, path, init);

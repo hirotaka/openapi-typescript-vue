@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { $api } from "../api";
+import { computed } from "vue";
 
-const { data, error, fetchNextPage, hasNextPage, isFetching, isError, isFetchingNextPage } = $api.useInfiniteQuery(
+const result = $api.useInfiniteQuery(
   "get",
   "/posts",
   {
@@ -17,6 +18,14 @@ const { data, error, fetchNextPage, hasNextPage, isFetching, isError, isFetching
     pageParamName: "page",
   },
 );
+
+const data = computed(() => result.data.value);
+const error = computed(() => result.error.value);
+const fetchNextPage = result.fetchNextPage;
+const hasNextPage = computed(() => result.hasNextPage.value);
+const isFetching = computed(() => result.isFetching.value);
+const isError = computed(() => result.isError.value);
+const isFetchingNextPage = computed(() => result.isFetchingNextPage.value);
 </script>
 
 <template>
@@ -30,7 +39,7 @@ const { data, error, fetchNextPage, hasNextPage, isFetching, isError, isFetching
     <template v-if="isFetching && !isFetchingNextPage">
       Fetching...
     </template>
-    <div v-for="(page, index) in data.pages" :key="index">
+    <div v-for="(page, index) in data?.pages" :key="index">
       <div v-for="post in page.items" :key="post.id">
         <h3>{{ post.title }}</h3>
         <p>{{ post.body }}</p>

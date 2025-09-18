@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { $api } from "../api";
+import { computed } from "vue";
 
-const { data, error, isLoading } = $api.useQuery("get", "/posts/{id}", {
+const result = $api.useQuery("get", "/posts/{id}", {
   params: {
     path: { id: "1" },
   },
 });
+
+const data = computed(() => result.data.value);
+const error = computed(() => result.error.value);
+const isLoading = computed(() => result.isLoading.value);
 </script>
 
 <template>
@@ -13,11 +18,11 @@ const { data, error, isLoading } = $api.useQuery("get", "/posts/{id}", {
     Loading...
   </template>
   <template v-else-if="error">
-    An error occured: {{ error.message }}
+    An error occured: {{ error }}
   </template>
   <template v-else>
-    <h3>{{ data.title }}</h3>
-    <p>{{ data.body }}</p>
+    <h3>{{ data?.title }}</h3>
+    <p>{{ data?.body }}</p>
   </template>
 </template>
 
