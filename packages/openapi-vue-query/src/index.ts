@@ -22,6 +22,7 @@ import type {
 } from "openapi-fetch";
 import type { HttpMethod, MediaType, PathsWithMethod, RequiredKeysOf } from "openapi-typescript-helpers";
 import type { DeepUnwrapRef, MaybeRefDeep } from "./utils";
+import type { Ref, UnwrapRef } from "vue";
 
 // Helper type to dynamically infer the type from the `select` property
 type InferSelectReturnType<TData, TSelect> = TSelect extends (data: TData) => infer R ? R : TData;
@@ -111,7 +112,10 @@ export type UseQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>,
   ...[init, options, queryClient]: RequiredKeysOf<Init> extends never
     ? [InitWithUnknowns<Init>?, Options?, QueryClient?]
     : [InitWithUnknowns<Init>, Options?, QueryClient?]
-) => UseQueryReturnType<InferSelectReturnType<Response["data"], Options["select"]>, Response["error"]>;
+) => UseQueryReturnType<InferSelectReturnType<Response["data"], Options["select"]>, Response["error"]> & {
+  data: InferSelectReturnType<Response["data"], Options["select"]> | undefined;
+  error: Response["error"] | null;
+};
 
 export type UseInfiniteQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
   Method extends HttpMethod,
