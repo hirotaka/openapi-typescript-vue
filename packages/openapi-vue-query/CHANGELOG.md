@@ -1,5 +1,15 @@
 # openapi-vue-query
 
+## 0.0.3
+
+### Patch Changes
+
+- [#12](https://github.com/hirotaka/openapi-typescript-vue/pull/12) [`c957bff`](https://github.com/hirotaka/openapi-typescript-vue/commit/c957bffdb938c3b94212936f55466f706416c09e) Thanks [@hirotaka](https://github.com/hirotaka)! - Fix Vue template TypeScript compatibility for useQuery
+  - Update UseQueryMethod return type to include unwrapped data and error properties
+  - Enables direct property access in Vue templates (e.g., `{{ data.title }}`, `{{ error.message }}`)
+  - Maintains compatibility with Vue Query v5 while providing better TypeScript experience
+  - Resolves type errors when using noUncheckedIndexedAccess in strict TypeScript configurations
+
 ## 0.0.2
 
 ### Patch Changes
