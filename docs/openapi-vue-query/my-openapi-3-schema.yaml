@@ -8,6 +8,39 @@ servers:
     description: Production server
 
 paths:
+  /users/{user_id}:
+    get:
+      summary: Get a user by ID
+      description: Retrieve a specific user by their ID
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 5
+          description: The ID of the user to retrieve
+      responses:
+        "200":
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /blogposts/{post_id}:
     get:
       summary: Get a blog post by ID
@@ -22,24 +55,24 @@ paths:
             example: 5
           description: The ID of the blog post to retrieve
       responses:
-        '200':
+        "200":
           description: Blog post retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPost'
-        '404':
+                $ref: "#/components/schemas/BlogPost"
+        "404":
           description: Blog post not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '500':
+                $ref: "#/components/schemas/Error"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /blogposts:
     get:
@@ -62,7 +95,7 @@ paths:
             maximum: 100
           description: Number of posts per page
       responses:
-        '200':
+        "200":
           description: List of blog posts retrieved successfully
           content:
             application/json:
@@ -72,15 +105,15 @@ paths:
                   posts:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BlogPost'
+                      $ref: "#/components/schemas/BlogPost"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '500':
+                    $ref: "#/components/schemas/Pagination"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
     post:
       summary: Create a new blog post
@@ -90,29 +123,61 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateBlogPost'
+              $ref: "#/components/schemas/CreateBlogPost"
       responses:
-        '201':
+        "201":
           description: Blog post created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPost'
-        '400':
+                $ref: "#/components/schemas/BlogPost"
+        "400":
           description: Invalid request data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '500':
+                $ref: "#/components/schemas/Error"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
+    User:
+      type: object
+      required:
+        - id
+        - firstname
+        - lastname
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+          description: Unique identifier for the user
+        firstname:
+          type: string
+          example: "John"
+          description: First name of the user
+        lastname:
+          type: string
+          example: "Doe"
+          description: Last name of the user
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+          description: Email address of the user
+        created_at:
+          type: string
+          format: date-time
+          example: "2023-12-01T10:00:00Z"
+          description: When the user was created
+
     BlogPost:
       type: object
       required:
@@ -137,7 +202,7 @@ components:
           example: "Vue 3 brings many exciting features..."
           description: Content of the blog post
         author:
-          $ref: '#/components/schemas/Author'
+          $ref: "#/components/schemas/Author"
         tags:
           type: array
           items:
