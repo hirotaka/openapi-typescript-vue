@@ -25,7 +25,7 @@ const { mutate } = $api.useMutation("patch", "/users");
 </script>
 
 <template>
-  <button @click="mutate({ body: { firstname: 'John'} })">
+  <button @click="mutate({ body: { firstname: 'John' } })">
     Update
   </button>
 </template>
@@ -61,7 +61,7 @@ const query = $api.useMutation(method, path, queryOptions, queryClient);
   - The pathname is used as key. See [Query Keys](https://tanstack.com/query/latest/docs/framework/vue/guides/query-keys) for more information.
 - `queryOptions`
   - The original `useMutation` options.
-  - [See more information](https://tanstack.com/query/latest/docs/framework/react/reference/useMutation)
+  - [See more information](https://tanstack.com/query/latest/docs/framework/vue/reference/useMutation)
 - `queryClient`
   - The original `queryClient` option.
   - [See more information](https://tanstack.com/query/latest/docs/framework/vue/reference/useMutation)
