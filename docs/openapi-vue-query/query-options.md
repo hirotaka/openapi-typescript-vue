@@ -71,7 +71,7 @@ Usage with [useQueries](https://tanstack.com/query/latest/docs/framework/vue/ref
 
 ::: code-group
 
-```tsx [src/use-users-by-id.ts]
+```ts [src/use-users-by-id.ts]
 import { useQueries } from '@tanstack/vue-query';
 import { $api } from "./api";
 
@@ -103,7 +103,7 @@ export const $api = createClient(fetchClient);
 
 ## Api
 
-```tsx
+```ts
 const queryOptions = $api.queryOptions(method, path, options, queryOptions);
 ```
 
