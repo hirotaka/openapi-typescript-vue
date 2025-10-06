@@ -56,7 +56,7 @@
     "build:cjs": "esbuild --bundle --platform=node --target=es2019 --outfile=dist/index.cjs --external:typescript src/index.ts",
     "dev": "tsc -p tsconfig.build.json --watch",
     "format": "biome format . --write",
-    "lint": "biome check .",
+    "lint": "biome check src test/*.test.tsx test/helpers vitest.config.ts",
     "generate-types": "openapi-typescript test/fixtures/api.yaml -o test/fixtures/api.d.ts",
     "pretest": "pnpm run generate-types",
     "test": "pnpm run \"/^test:/\"",

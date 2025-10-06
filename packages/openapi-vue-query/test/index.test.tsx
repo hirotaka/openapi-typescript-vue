@@ -1,11 +1,11 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { server, baseUrl, useMockRequestHandler } from "./fixtures/mock-server.js";
-import type { paths } from "./fixtures/api.js";
-import createClient, { type MethodResponse } from "../src/index.js";
-import createFetchClient from "openapi-fetch";
-import { defineComponent } from "vue";
+import { QueryClient, skipToken, useQueries, useQuery } from "@tanstack/vue-query";
 import { fireEvent, render, waitFor } from "@testing-library/vue";
-import { QueryClient, useQueries, useQuery, skipToken } from "@tanstack/vue-query";
+import createFetchClient from "openapi-fetch";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { defineComponent } from "vue";
+import createClient, { type MethodResponse } from "../src/index.js";
+import type { paths } from "./fixtures/api.js";
+import { baseUrl, server, useMockRequestHandler } from "./fixtures/mock-server.js";
 import { renderHook } from "./helpers/render-hook.js";
 
 type minimalGetPaths = {
@@ -813,7 +813,7 @@ describe("client", () => {
       expect(firstRequestUrl?.searchParams.get("cursor")).toBe("0");
 
       // Set up mock for second page before triggering next page fetch
-      const secondRequestHandler = useMockRequestHandler({
+      const _secondRequestHandler = useMockRequestHandler({
         baseUrl,
         method: "get",
         path: "/paginated-data",

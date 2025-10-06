@@ -1,6 +1,6 @@
-import { defineConfig, type Plugin } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { defineConfig, type Plugin } from "vitest/config";
 
 export default defineConfig({
   plugins: [vue() as unknown as Plugin, vueJsx() as unknown as Plugin],
