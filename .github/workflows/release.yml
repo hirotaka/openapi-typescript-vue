@@ -21,13 +21,14 @@ jobs:
       - name: Git setup
         uses: actions/checkout@v5
 
+      - name: pnpm setup
+        uses: pnpm/action-setup@v4
+
       - name: Node setup
         uses: actions/setup-node@v5
         with:
           node-version: 22
-
-      - name: pnpm setup
-        uses: pnpm/action-setup@v4
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
