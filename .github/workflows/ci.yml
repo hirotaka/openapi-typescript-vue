@@ -10,6 +10,7 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# testing job
 jobs:
   lint:
     runs-on: ubuntu-latest
