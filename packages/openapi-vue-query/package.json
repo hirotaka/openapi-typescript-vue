@@ -73,7 +73,7 @@
     "@testing-library/vue": "^8.1.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.0.0",
-    "@vue/babel-plugin-jsx": "^1.2.5",
+    "@vue/babel-plugin-jsx": "^2.0.0",
     "del-cli": "^7.0.0",
     "esbuild": "^0.25.0",
     "execa": "^9.0.0",
