@@ -795,7 +795,8 @@ describe("client", () => {
           {
             getNextPageParam: (lastPage) => lastPage.nextPage,
             initialPageParam: 0,
-            select: (data) => ({
+            // FIXME: avoid using any
+            select: (data: any) => ({
               pages: [...data.pages].reverse(),
               pageParams: [...data.pageParams].reverse(),
             }),

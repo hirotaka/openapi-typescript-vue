@@ -22,7 +22,6 @@ import type {
 } from "openapi-fetch";
 import type { HttpMethod, MediaType, PathsWithMethod, RequiredKeysOf } from "openapi-typescript-helpers";
 import type { DeepUnwrapRef, MaybeRefDeep } from "./utils";
-import type { Ref, UnwrapRef } from "vue";
 
 // Helper type to dynamically infer the type from the `select` property
 type InferSelectReturnType<TData, TSelect> = TSelect extends (data: TData) => infer R ? R : TData;
@@ -30,13 +29,16 @@ type InferSelectReturnType<TData, TSelect> = TSelect extends (data: TData) => in
 type InitWithUnknowns<Init> = Init & { [key: string]: unknown };
 
 export type QueryKey<
-  Paths extends Record<string, Record<HttpMethod, {}>>,
+  Paths extends Record<string, Record<HttpMethod, Record<string, any>>>,
   Method extends HttpMethod,
   Path extends PathsWithMethod<Paths, Method>,
   Init = MaybeOptionalInit<Paths[Path], Method>,
 > = Init extends undefined ? readonly [Method, Path] : readonly [Method, Path, Init];
 
-export type QueryOptionsFunction<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
+export type QueryOptionsFunction<
+  Paths extends Record<string, Record<HttpMethod, Record<string, any>>>,
+  Media extends MediaType,
+> = <
   Method extends HttpMethod,
   Path extends PathsWithMethod<Paths, Method>,
   Init extends MaybeOptionalInit<Paths[Path], Method>,
@@ -89,7 +91,10 @@ export type QueryOptionsFunction<Paths extends Record<string, Record<HttpMethod,
   }
 >;
 
-export type UseQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
+export type UseQueryMethod<
+  Paths extends Record<string, Record<HttpMethod, Record<string, any>>>,
+  Media extends MediaType,
+> = <
   Method extends HttpMethod,
   Path extends PathsWithMethod<Paths, Method>,
   Init extends MaybeOptionalInit<Paths[Path], Method>,
@@ -117,7 +122,10 @@ export type UseQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>,
   error: Response["error"] | null;
 };
 
-export type UseInfiniteQueryMethod<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
+export type UseInfiniteQueryMethod<
+  Paths extends Record<string, Record<HttpMethod, Record<string, any>>>,
+  Media extends MediaType,
+> = <
   Method extends HttpMethod,
   Path extends PathsWithMethod<Paths, Method>,
   Init extends MaybeOptionalInit<Paths[Path], Method>,
@@ -127,13 +135,19 @@ export type UseInfiniteQueryMethod<Paths extends Record<string, Record<HttpMetho
       Response["data"],
       Response["error"],
       InfiniteData<Response["data"]>,
-      Response["data"],
       QueryKey<Paths, Method, Path>,
       unknown
     >,
     "queryKey" | "queryFn"
   > & {
     pageParamName?: string;
+    getNextPageParam: (
+      lastPage: Response["data"],
+      allPages: Response["data"][],
+      lastPageParam: unknown,
+      allPageParams: unknown[],
+    ) => unknown;
+    initialPageParam: unknown;
   },
 >(
   method: Method,
@@ -143,7 +157,10 @@ export type UseInfiniteQueryMethod<Paths extends Record<string, Record<HttpMetho
   queryClient?: QueryClient,
 ) => UseInfiniteQueryReturnType<InfiniteData<Response["data"]>, Response["error"]>;
 
-export type UseMutationMethod<Paths extends Record<string, Record<HttpMethod, {}>>, Media extends MediaType> = <
+export type UseMutationMethod<
+  Paths extends Record<string, Record<HttpMethod, Record<string, any>>>,
+  Media extends MediaType,
+> = <
   Method extends HttpMethod,
   Path extends PathsWithMethod<Paths, Method>,
   Init extends MaybeOptionalInit<Paths[Path], Method>,
@@ -156,7 +173,7 @@ export type UseMutationMethod<Paths extends Record<string, Record<HttpMethod, {}
   queryClient?: QueryClient,
 ) => UseMutationReturnType<Response["data"], Response["error"], Init, unknown>;
 
-export interface OpenapiQueryClient<Paths extends {}, Media extends MediaType = MediaType> {
+export interface OpenapiQueryClient<Paths extends Record<string, any>, Media extends MediaType = MediaType> {
   queryOptions: QueryOptionsFunction<Paths, Media>;
   useQuery: UseQueryMethod<Paths, Media>;
   useInfiniteQuery: UseInfiniteQueryMethod<Paths, Media>;
@@ -175,7 +192,7 @@ export type MethodResponse<
   : never;
 
 // TODO: Add the ability to bring queryClient as argument
-export default function createClient<Paths extends {}, Media extends MediaType = MediaType>(
+export default function createClient<Paths extends Record<string, any>, Media extends MediaType = MediaType>(
   client: FetchClient<Paths, Media>,
 ): OpenapiQueryClient<Paths, Media> {
   const queryFn = async <Method extends HttpMethod, Path extends PathsWithMethod<Paths, Method>>({
@@ -211,7 +228,7 @@ export default function createClient<Paths extends {}, Media extends MediaType =
       // @ts-expect-error FIX: fix type error
       useQuery(queryOptions(method, path, init as InitWithUnknowns<typeof init>, options), queryClient),
     useInfiniteQuery: (method, path, init, options, queryClient) => {
-      const { pageParamName = "cursor", ...restOptions } = options;
+      const { pageParamName = "cursor", getNextPageParam, initialPageParam, ...restOptions } = options;
       const { queryKey } = queryOptions(method, path, init);
       return useInfiniteQuery(
         {
@@ -237,6 +254,8 @@ export default function createClient<Paths extends {}, Media extends MediaType =
             }
             return data;
           },
+          getNextPageParam,
+          initialPageParam,
           ...restOptions,
         },
         queryClient,
