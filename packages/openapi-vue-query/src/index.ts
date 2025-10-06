@@ -5,18 +5,18 @@ import {
   type SkipToken,
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryReturnType,
-  type UseQueryOptions,
-  type UseQueryReturnType,
   type UseMutationOptions,
   type UseMutationReturnType,
-  useQuery,
+  type UseQueryOptions,
+  type UseQueryReturnType,
   useInfiniteQuery,
   useMutation,
+  useQuery,
 } from "@tanstack/vue-query";
 import type {
-  Client as FetchClient,
   ClientMethod,
   DefaultParamsOption,
+  Client as FetchClient,
   FetchResponse,
   MaybeOptionalInit,
 } from "openapi-fetch";

@@ -7,7 +7,7 @@ import type {
 } from "@tanstack/vue-query";
 import type { ComputedRef, MaybeRef, MaybeRefOrGetter } from "vue";
 
-import type { ClientContext, SetOptional, MaybeRefDeep } from "./utils";
+import type { ClientContext, MaybeRefDeep } from "./utils";
 
 export type QueryOptionsIn<
   TClientContext extends ClientContext,
