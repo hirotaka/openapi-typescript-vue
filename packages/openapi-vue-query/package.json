@@ -76,7 +76,7 @@
     "@vue/babel-plugin-jsx": "^1.2.5",
     "del-cli": "^5.1.0",
     "esbuild": "^0.25.0",
-    "execa": "^8.0.1",
+    "execa": "^9.0.0",
     "happy-dom": "^17.1.8",
     "jsdom": "^26.0.0",
     "msw": "^2.7.0",
