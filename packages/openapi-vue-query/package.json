@@ -75,7 +75,7 @@
     "@vitejs/plugin-vue-jsx": "^4.1.1",
     "@vue/babel-plugin-jsx": "^1.2.5",
     "del-cli": "^5.1.0",
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "execa": "^8.0.1",
     "happy-dom": "^17.1.8",
     "jsdom": "^26.0.0",
