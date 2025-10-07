@@ -1,5 +1,15 @@
 # openapi-vue-query
 
+## 0.0.4
+
+### Patch Changes
+
+- [#59](https://github.com/hirotaka/openapi-typescript-vue/pull/59) [`674541b`](https://github.com/hirotaka/openapi-typescript-vue/commit/674541bf1789a015dc8ed077cc7d7c6f8237ca1b) Thanks [@hirotaka](https://github.com/hirotaka)! - Fix TypeScript type compatibility with @tanstack/vue-query updates
+  - Fix UseInfiniteQueryOptions type argument count (6 to 5)
+  - Add required getNextPageParam and initialPageParam parameters
+  - Replace empty object type {} with Record<string, any> for better type safety
+  - Remove unused Vue type imports
+
 ## 0.0.3
 
 ### Patch Changes
