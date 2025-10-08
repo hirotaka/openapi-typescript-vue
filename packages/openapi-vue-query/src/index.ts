@@ -233,9 +233,9 @@ export default function createClient<Paths extends Record<string, any>, Media ex
       return useInfiniteQuery(
         {
           queryKey: queryKey as MaybeRefDeep<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>>,
-          queryFn: async ({ queryKey: [method, path, init], pageParam = 0, signal }) => {
+          queryFn: async ({ queryKey: [method, path, init], pageParam = 0, signal }: any) => {
             const mth = method.toUpperCase() as Uppercase<typeof method>;
-            const fn = client[mth] as ClientMethod<Paths, typeof method, Media>;
+            const fn = (client as any)[mth] as ClientMethod<Paths, typeof method, Media>;
             const mergedInit = {
               ...init,
               signal,
@@ -257,7 +257,7 @@ export default function createClient<Paths extends Record<string, any>, Media ex
           getNextPageParam,
           initialPageParam,
           ...restOptions,
-        },
+        } as any,
         queryClient,
       );
     },

@@ -707,7 +707,7 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
           },
         ),
@@ -793,10 +793,9 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
-            // FIXME: avoid using any
-            select: (data: any) => ({
+            select: (data: InfiniteData<{ items: number[]; nextPage?: number }, unknown>) => ({
               pages: [...data.pages].reverse(),
               pageParams: [...data.pageParams].reverse(),
             }),
@@ -878,7 +877,7 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
             pageParamName: "follow_cursor",
           },
