@@ -227,40 +227,45 @@ export default function createClient<Paths extends Record<string, any>, Media ex
     useQuery: (method, path, ...[init, options, queryClient]) =>
       // @ts-expect-error FIX: fix type error
       useQuery(queryOptions(method, path, init as InitWithUnknowns<typeof init>, options), queryClient),
-    useInfiniteQuery: (method, path, init, options, queryClient) => {
-      const { pageParamName = "cursor", getNextPageParam, initialPageParam, ...restOptions } = options;
+    useInfiniteQuery: ((method, path, init, options, queryClient) => {
+      const { pageParamName = "cursor", ...restOptions } = options;
       const { queryKey } = queryOptions(method, path, init);
+
       return useInfiniteQuery(
         {
           queryKey: queryKey as MaybeRefDeep<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>>,
-          queryFn: async ({ queryKey: [method, path, init], pageParam = 0, signal }) => {
-            const mth = method.toUpperCase() as Uppercase<typeof method>;
+          queryFn: async (
+            context: QueryFunctionContext<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>, unknown>,
+          ) => {
+            const [queryMethod, queryPath, queryInit] = context.queryKey as QueryKey<Paths, typeof method, typeof path>;
+            const { pageParam = 0, signal } = context;
+
+            const mth = queryMethod.toUpperCase() as Uppercase<typeof method>;
             const fn = client[mth] as ClientMethod<Paths, typeof method, Media>;
             const mergedInit = {
-              ...init,
+              ...queryInit,
               signal,
               params: {
-                ...(init?.params || {}),
+                ...(queryInit?.params || {}),
                 query: {
-                  ...(init?.params as { query?: DefaultParamsOption })?.query,
+                  ...(queryInit?.params as { query?: DefaultParamsOption })?.query,
                   [pageParamName]: pageParam,
                 },
               },
             };
 
-            const { data, error } = await fn(path as PathsWithMethod<Paths, typeof method>, mergedInit as any);
+            const response = await (fn as Function)(queryPath, mergedInit);
+            const { data, error } = response;
             if (error) {
               throw error;
             }
             return data;
           },
-          getNextPageParam,
-          initialPageParam,
           ...restOptions,
-        },
+        } as unknown as Parameters<typeof useInfiniteQuery>[0],
         queryClient,
       );
-    },
+    }) as UseInfiniteQueryMethod<Paths, Media>,
     useMutation: (method, path, options, queryClient) =>
       // @ts-expect-error FIX: fix type error
       useMutation(
