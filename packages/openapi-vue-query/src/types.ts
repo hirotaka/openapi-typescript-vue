@@ -45,7 +45,9 @@ export type InfiniteOptionsIn<
 > = { input: (pageParam: TPageParam) => MaybeRefDeep<TInput> } & (Record<never, never> extends TClientContext
   ? { context?: MaybeRefDeep<TClientContext> }
   : { context: MaybeRefDeep<TClientContext> }) &
-  Omit<UseInfiniteQueryOptions<TOutput, TError, TSelectData, QueryKey, TPageParam>, "queryKey"> & { queryKey?: QueryKey };
+  Omit<UseInfiniteQueryOptions<TOutput, TError, TSelectData, QueryKey, TPageParam>, "queryKey"> & {
+    queryKey?: QueryKey;
+  };
 
 export interface InfiniteOptionsBase<TOutput, TError extends Error, TPageParam> {
   queryKey: ComputedRef<QueryKey>;

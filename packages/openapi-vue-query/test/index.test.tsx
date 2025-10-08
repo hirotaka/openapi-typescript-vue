@@ -1,11 +1,11 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { baseUrl, server, useMockRequestHandler } from "./fixtures/mock-server.js";
-import type { paths } from "./fixtures/api.js";
-import createClient, { type MethodResponse } from "../src/index.js";
-import createFetchClient from "openapi-fetch";
-import { defineComponent } from "vue";
+import { type InfiniteData, QueryClient, skipToken, useQueries, useQuery } from "@tanstack/vue-query";
 import { fireEvent, render, waitFor } from "@testing-library/vue";
-import { QueryClient, useQueries, useQuery, skipToken, type InfiniteData } from "@tanstack/vue-query";
+import createFetchClient from "openapi-fetch";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { defineComponent } from "vue";
+import createClient, { type MethodResponse } from "../src/index.js";
+import type { paths } from "./fixtures/api.js";
+import { baseUrl, server, useMockRequestHandler } from "./fixtures/mock-server.js";
 import { renderHook } from "./helpers/render-hook.js";
 
 type minimalGetPaths = {

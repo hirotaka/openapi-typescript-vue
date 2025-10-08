@@ -234,7 +234,9 @@ export default function createClient<Paths extends Record<string, any>, Media ex
       return useInfiniteQuery(
         {
           queryKey: queryKey as MaybeRefDeep<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>>,
-          queryFn: async (context: QueryFunctionContext<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>, unknown>) => {
+          queryFn: async (
+            context: QueryFunctionContext<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>, unknown>,
+          ) => {
             const [queryMethod, queryPath, queryInit] = context.queryKey as QueryKey<Paths, typeof method, typeof path>;
             const { pageParam = 0, signal } = context;
 
