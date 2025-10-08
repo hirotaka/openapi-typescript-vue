@@ -1,11 +1,11 @@
-import { QueryClient, skipToken, useQueries, useQuery } from "@tanstack/vue-query";
-import { fireEvent, render, waitFor } from "@testing-library/vue";
-import createFetchClient from "openapi-fetch";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { defineComponent } from "vue";
-import createClient, { type MethodResponse } from "../src/index.js";
-import type { paths } from "./fixtures/api.js";
 import { baseUrl, server, useMockRequestHandler } from "./fixtures/mock-server.js";
+import type { paths } from "./fixtures/api.js";
+import createClient, { type MethodResponse } from "../src/index.js";
+import createFetchClient from "openapi-fetch";
+import { defineComponent } from "vue";
+import { fireEvent, render, waitFor } from "@testing-library/vue";
+import { QueryClient, useQueries, useQuery, skipToken, type InfiniteData } from "@tanstack/vue-query";
 import { renderHook } from "./helpers/render-hook.js";
 
 type minimalGetPaths = {
@@ -707,7 +707,7 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items?: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
           },
         ),
@@ -793,9 +793,9 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items?: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
-            select: (data: InfiniteData<{ items: number[]; nextPage?: number }, unknown>) => ({
+            select: (data: InfiniteData<{ items?: number[]; nextPage?: number }, unknown>) => ({
               pages: [...data.pages].reverse(),
               pageParams: [...data.pageParams].reverse(),
             }),
@@ -877,7 +877,7 @@ describe("client", () => {
             },
           },
           {
-            getNextPageParam: (lastPage: { items: number[]; nextPage?: number }) => lastPage.nextPage,
+            getNextPageParam: (lastPage: { items?: number[]; nextPage?: number }) => lastPage.nextPage,
             initialPageParam: 0,
             pageParamName: "follow_cursor",
           },
