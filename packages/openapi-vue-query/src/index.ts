@@ -224,9 +224,13 @@ export default function createClient<Paths extends Record<string, any>, Media ex
 
   return {
     queryOptions,
-    useQuery: (method, path, ...[init, options, queryClient]) =>
-      // @ts-expect-error FIX: fix type error
-      useQuery(queryOptions(method, path, init as InitWithUnknowns<typeof init>, options), queryClient),
+    useQuery: ((method, path, ...[init, options, queryClient]) => {
+      const opts = queryOptions(method, path, init as InitWithUnknowns<typeof init>, options);
+      // Type assertion is necessary here because queryOptions returns types wrapped with DeepUnwrapRef
+      // for Vue reactivity, which don't structurally match what TanStack Query's useQuery expects.
+      // The outer type assertion to UseQueryMethod ensures type safety for consumers.
+      return useQuery(opts as any, queryClient);
+    }) as UseQueryMethod<Paths, Media>,
     useInfiniteQuery: ((method, path, init, options, queryClient) => {
       const { pageParamName = "cursor", ...restOptions } = options;
       const { queryKey } = queryOptions(method, path, init);
