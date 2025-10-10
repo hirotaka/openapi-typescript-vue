@@ -13,6 +13,7 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/vue-query";
+import { computed, type ComputedRef } from "vue";
 import type {
   ClientMethod,
   DefaultParamsOption,
@@ -74,7 +75,7 @@ export type QueryOptionsFunction<
     >,
     "queryKey" | "queryFn"
   > & {
-    queryKey: QueryKey<Paths, Method, Path>;
+    queryKey: ComputedRef<QueryKey<Paths, Method, Path>>;
   } & {
     queryFn: Exclude<
       DeepUnwrapRef<
@@ -212,22 +213,26 @@ export default function createClient<Paths extends Record<string, any>, Media ex
     return data;
   };
 
-  const queryOptions: QueryOptionsFunction<Paths, Media> = (method, path, ...[init, options]) => ({
-    queryKey: (init === undefined ? ([method, path] as const) : ([method, path, init] as const)) as QueryKey<
+  const queryOptions: QueryOptionsFunction<Paths, Media> = (method, path, ...[init, options]) => {
+    const key = (init === undefined ? ([method, path] as const) : ([method, path, init] as const)) as QueryKey<
       Paths,
       typeof method,
       typeof path
-    >,
-    queryFn,
-    ...options,
-  });
+    >;
+
+    return {
+      queryKey: computed(() => key),
+      queryFn,
+      ...options,
+    };
+  };
 
   return {
     queryOptions,
     useQuery: ((method, path, ...[init, options, queryClient]) => {
       const opts = queryOptions(method, path, init as InitWithUnknowns<typeof init>, options);
-      // Type assertion is necessary here because queryOptions returns types wrapped with DeepUnwrapRef
-      // for Vue reactivity, which don't structurally match what TanStack Query's useQuery expects.
+      // Type assertion needed: queryOptions returns queryKey as ComputedRef (for Vue reactivity),
+      // but TypeScript can't verify the structural compatibility with UseQueryOptions.
       // The outer type assertion to UseQueryMethod ensures type safety for consumers.
       return useQuery(opts as any, queryClient);
     }) as UseQueryMethod<Paths, Media>,
@@ -237,7 +242,7 @@ export default function createClient<Paths extends Record<string, any>, Media ex
 
       return useInfiniteQuery(
         {
-          queryKey: queryKey as MaybeRefDeep<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>>,
+          queryKey, // queryKey is already a ComputedRef, which is compatible with MaybeRefDeep
           queryFn: async (
             context: QueryFunctionContext<DeepUnwrapRef<QueryKey<Paths, typeof method, typeof path>>, unknown>,
           ) => {
