@@ -206,7 +206,7 @@ describe("client", () => {
       });
       const client = createClient(fetchClient);
 
-      expect(client.queryOptions("get", "/foo").queryKey.length).toBe(2);
+      expect(client.queryOptions("get", "/foo").queryKey.value.length).toBe(2);
     });
   });
 
