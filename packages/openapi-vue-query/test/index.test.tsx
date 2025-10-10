@@ -195,8 +195,7 @@ describe("client", () => {
       );
 
       expectTypeOf(result.data.value).toEqualTypeOf<"select(true)" | undefined>();
-      // TODO: fix this
-      // expectTypeOf(result.error.value).toEqualTypeOf<false | null>();
+      expectTypeOf(result.error.value).toEqualTypeOf<false | null>();
     });
 
     it("returns query options without an init", async () => {
