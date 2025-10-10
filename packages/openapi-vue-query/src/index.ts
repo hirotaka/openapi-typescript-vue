@@ -276,11 +276,10 @@ export default function createClient<Paths extends Record<string, any>, Media ex
       );
     }) as UseInfiniteQueryMethod<Paths, Media>,
     useMutation: (method, path, options, queryClient) =>
-      // @ts-expect-error FIX: fix type error
       useMutation(
         {
           mutationKey: [method, path],
-          mutationFn: async (init) => {
+          mutationFn: async (init: any) => {
             const mth = method.toUpperCase() as Uppercase<typeof method>;
             const fn = client[mth] as ClientMethod<Paths, typeof method, Media>;
             const { data, error } = await fn(path, init as InitWithUnknowns<typeof init>);
@@ -291,7 +290,7 @@ export default function createClient<Paths extends Record<string, any>, Media ex
             return data as Exclude<typeof data, undefined>;
           },
           ...options,
-        },
+        } as any, // Type assertion needed: mutationFn return type Exclude<data, undefined> doesn't structurally match Response["data"]
         queryClient,
       ),
   };
