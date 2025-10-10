@@ -1,7 +1,7 @@
 {
   "name": "openapi-vue-query",
   "description": "Fast, type-safe @tanstack/vue-query client to work with your OpenAPI schema.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Hirotaka Mizutani",
     "email": "hirotaka@mizutani.to"

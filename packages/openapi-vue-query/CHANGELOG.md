@@ -1,5 +1,17 @@
 # openapi-vue-query
 
+## 0.0.5
+
+### Patch Changes
+
+- [#74](https://github.com/hirotaka/openapi-typescript-vue/pull/74) [`380f3f2`](https://github.com/hirotaka/openapi-typescript-vue/commit/380f3f2e0db92955682a3063253c290894e79dea) Thanks [@hirotaka](https://github.com/hirotaka)! - Fix type errors and improve Vue reactivity support
+  - Fix type error in useQuery by making queryKey reactive with computed() (#67)
+  - Fix type error in useMutation method wrapper (#68)
+  - Fix error type inference with conditional queries using SKIP token (#69)
+  - Add partial reactive support (queryKey only) following @orpc/vue-query pattern
+  - Remove @ts-expect-error comments and add clear explanations for necessary type assertions
+  - Document future type safety improvements in #72
+
 ## 0.0.4
 
 ### Patch Changes
