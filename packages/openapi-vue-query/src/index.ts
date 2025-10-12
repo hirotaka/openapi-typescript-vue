@@ -21,8 +21,8 @@ import type {
   MaybeOptionalInit,
 } from "openapi-fetch";
 import type { HttpMethod, MediaType, PathsWithMethod, RequiredKeysOf } from "openapi-typescript-helpers";
-import { type ComputedRef, computed } from "vue";
-import type { DeepUnwrapRef } from "./utils";
+import type {DeepUnwrapRef, MaybeRefDeep} from "@tanstack/vue-query/types"
+import { computed, type ComputedRef, type Ref, type UnwrapRef } from "vue";
 
 // Helper type to dynamically infer the type from the `select` property
 type InferSelectReturnType<TData, TSelect> = TSelect extends (data: TData) => infer R ? R : TData;
