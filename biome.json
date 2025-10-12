@@ -14,7 +14,8 @@
       "recommended": true,
       "complexity": {
         "noExcessiveNestedTestSuites": "off",
-        "useArrowFunction": "off"
+        "useArrowFunction": "off",
+        "noBannedTypes": "off"
       },
       "suspicious": {
         "noConsole": "error",
