@@ -10,8 +10,11 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "target": "ES2022",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@tanstack/vue-query/types": ["node_modules/@tanstack/vue-query/build/modern/types.d.ts"]
+    }
   },
   "include": ["src", "test", "*.ts"],
-  "exclude": ["node_modules"]
 }
