@@ -38,7 +38,11 @@
       "path": "packages/openapi-vue-query/dist/index.js",
       "limit": "40 kB",
       "brotli": false,
-      "ignore": ["@tanstack/vue-query", "@tanstack/query-core", "openapi-typescript-helpers"]
+      "ignore": [
+        "@tanstack/vue-query",
+        "@tanstack/query-core",
+        "openapi-typescript-helpers"
+      ]
     }
   ]
 }
