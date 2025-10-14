@@ -106,8 +106,8 @@ importers:
         specifier: ^2.7.0
         version: 2.11.5(@types/node@22.18.9)(typescript@5.9.3)
       openapi-fetch:
-        specifier: ^0.14.0
-        version: 0.14.1
+        specifier: ^0.15.0
+        version: 0.15.0
       openapi-typescript:
         specifier: ^7.7.3
         version: 7.9.1(typescript@5.9.3)
@@ -1036,6 +1036,7 @@ packages:
 
   '@mswjs/data@0.16.2':
     resolution: {integrity: sha512-/C0d/PBcJyQJokUhcjO4HiZPc67hzllKlRtD1XELygl2t991/ATAAQJVcStn4YtVALsNodruzOHT0JIvgr0hnA==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   '@mswjs/interceptors@0.39.7':
     resolution: {integrity: sha512-sURvQbbKsq5f8INV54YJgJEdk8oxBanqkTiXXd33rKmofFCwZLhLRszPduMZ9TA9b8/1CHc/IJmOlBHJk2Q5AQ==}
@@ -3315,6 +3316,9 @@ packages:
 
   openapi-fetch@0.14.1:
     resolution: {integrity: sha512-l7RarRHxlEZYjMLd/PR0slfMVse2/vvIAGm75/F7J6MlQ8/b9uUQmUF2kCPrQhJqMXSxmYWObVgeYXbFYzZR+A==}
+
+  openapi-fetch@0.15.0:
+    resolution: {integrity: sha512-OjQUdi61WO4HYhr9+byCPMj0+bgste/LtSBEcV6FzDdONTs7x0fWn8/ndoYwzqCsKWIxEZwo4FN/TG1c1rI8IQ==}
 
   openapi-metadata@0.2.2:
     resolution: {integrity: sha512-2dBVRvZWcExRFhRhnA2YB9GY4LToIm66OxepFwp+X5VUIhCLA2rRKY43vjQVz92rdWELep5rleBESNEPGqoCqw==}
@@ -8305,6 +8309,10 @@ snapshots:
       is-wsl: 3.1.0
 
   openapi-fetch@0.14.1:
+    dependencies:
+      openapi-typescript-helpers: 0.0.15
+
+  openapi-fetch@0.15.0:
     dependencies:
       openapi-typescript-helpers: 0.0.15
 
