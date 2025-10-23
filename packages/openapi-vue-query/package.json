@@ -86,6 +86,6 @@
   },
   "peerDependencies": {
     "@tanstack/vue-query": "^5.66.0",
-    "openapi-fetch": "^0.14.0"
+    "openapi-fetch": "^0.14.0 || ^0.15.0"
   }
 }
