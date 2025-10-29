@@ -1,11 +1,12 @@
 import { type InfiniteData, QueryClient, skipToken, useQueries, useQuery } from "@tanstack/vue-query";
-import { fireEvent, render, waitFor } from "@testing-library/vue";
+import { fireEvent, waitFor } from "@testing-library/vue";
 import createFetchClient from "openapi-fetch";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { defineComponent } from "vue";
 import createClient, { type MethodResponse } from "../src/index.js";
 import type { paths } from "./fixtures/api.js";
 import { baseUrl, server, useMockRequestHandler } from "./fixtures/mock-server.js";
+import { render } from "./helpers/render.js";
 import { renderHook } from "./helpers/render-hook.js";
 
 type minimalGetPaths = {
@@ -386,7 +387,7 @@ describe("client", () => {
       });
     });
 
-    it.skip("should use provided custom queryClient", async () => {
+    it("should use provided custom queryClient", async () => {
       const fetchClient = createFetchClient<paths>({ baseUrl });
       const client = createClient(fetchClient);
       const customQueryClient = new QueryClient({});
@@ -419,7 +420,7 @@ describe("client", () => {
         body: { title: "hello" },
       });
 
-      const rendered = render(Page);
+      const rendered = render(Page, { queryClient: customQueryClient });
 
       await waitFor(() => expect(rendered.getByText("data: hello")));
     });
@@ -536,7 +537,7 @@ describe("client", () => {
         expect(data.value).toBeUndefined();
       });
 
-      it.skip("should use provided custom queryClient", async () => {
+      it("should use provided custom queryClient", async () => {
         const fetchClient = createFetchClient<paths>({ baseUrl });
         const client = createClient(fetchClient);
         const customQueryClient = new QueryClient({});
@@ -576,7 +577,7 @@ describe("client", () => {
           body: { message: "Hello" },
         });
 
-        const rendered = render(Page);
+        const rendered = render(Page, { queryClient: customQueryClient });
 
         await rendered.findByText("data: null, status: idle");
 
@@ -629,7 +630,7 @@ describe("client", () => {
         ).rejects.toThrow();
       });
 
-      it.skip("should use provided custom queryClient", async () => {
+      it("should use provided custom queryClient", async () => {
         const fetchClient = createFetchClient<paths>({ baseUrl });
         const client = createClient(fetchClient);
         const customQueryClient = new QueryClient({});
@@ -669,7 +670,7 @@ describe("client", () => {
           body: { message: "Hello" },
         });
 
-        const rendered = render(Page);
+        const rendered = render(Page, { queryClient: customQueryClient });
 
         await rendered.findByText("data: null, status: idle");
 
