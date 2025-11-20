@@ -19,7 +19,7 @@ jobs:
       checks: write
     steps:
       - name: Git setup
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: pnpm setup
         uses: pnpm/action-setup@v4
