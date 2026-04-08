@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@tanstack/query-core": "^5.66.11",
-    "openapi-typescript-helpers": "^0.0.15"
+    "openapi-typescript-helpers": "^0.1.0"
   },
   "devDependencies": {
     "@tanstack/vue-query": "^5.66.0",
